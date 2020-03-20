@@ -1,14 +1,19 @@
 require 'rails_helper'
 RSpec.describe "タスク管理機能", type: :system do
+  # before do
+  #   @task = Task.create!(name: "aaa", description: "bbb")
+  # end
+
   before do
-    @task = Task.create!(name: "aaa", description: "bbb")
+    @task = create(:task)
   end
+
   describe "タスク一覧画面" do
     context "タスクを作成した場合" do
       it "作成済のタスクが表示されること" do
         visit root_path
-        expect(page).to have_content "aaa"
-        expect(page).to have_content "bbb"
+        expect(page).to have_content "test_name"
+        expect(page).to have_content "test_description"
         # expect(page).to have_content "ccc"
 
       end
@@ -31,8 +36,8 @@ RSpec.describe "タスク管理機能", type: :system do
     context "任意のタスク詳細画面に遷移した場合" do
       it "当該タスクの内容が表示されたページに遷移すること" do
         visit task_path(@task)
-        expect(page).to have_content "aaa"
-        expect(page).to have_content "bbb"
+        expect(page).to have_content "test_name"
+        expect(page).to have_content "test_description"
         # expect(page).to have_content "ccc"
       end
     end
