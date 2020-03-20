@@ -36,7 +36,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to root_path
+    redirect_to root_path, notice: "「#{@task.name}」を削除しました。"
   end
 
   private
