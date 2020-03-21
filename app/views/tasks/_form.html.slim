@@ -7,4 +7,9 @@
   .form-group
     = f.label :description
     = f.text_area :description, rows: 5, class: "form-control", id: "task_description"
+  .form-group
+    = f.label :end_date
+    = f.datetime_select :end_date,
+        start_year: 2000, end_year: Time.current.year + 1,
+        use_month_numbers: true
   = f.submit nil, class: "btn btn-primary"

@@ -2,7 +2,13 @@ class TasksController < ApplicationController
   before_action :set_task, only:[:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.order(created_at: :desc)
+    if params[:sort_end_date] == "asc"
+      @tasks = Task.order(end_date: :asc)
+    elsif params[:sort_end_date] == "desc"
+      @tasks = Task.order(end_date: :desc)
+    else
+      @tasks = Task.order(created_at: :desc)
+    end
   end
 
   def new
@@ -51,6 +57,7 @@ class TasksController < ApplicationController
       :description,
       :created_at,
       :updated_at,
+      :end_date,
     )
   end
 end
