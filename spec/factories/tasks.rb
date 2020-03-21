@@ -1,10 +1,12 @@
 FactoryBot.define do
   factory :task do
-    name { "test_name" }
-    description { "test_description" }
+    name { "name1" }
+    description { "description1" }
+    end_date { Time.current}
   end
   factory :second_task, class: Task do
-    name { "new_task" }
-    description { "new_description" }
+    name { "name2" }
+    description { "description2" }
+    end_date { Time.current + 1.days}
   end
 end

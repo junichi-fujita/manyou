@@ -13,8 +13,8 @@ RSpec.describe "タスク管理機能", type: :system do
     context "タスクを作成した場合" do
       it "作成済のタスクが表示されること" do
         visit root_path
-        expect(page).to have_content "test_name"
-        expect(page).to have_content "test_description"
+        expect(page).to have_content "name1"
+        expect(page).to have_content "name2"
         # expect(page).to have_content "ccc"
       end
     end
@@ -24,8 +24,28 @@ RSpec.describe "タスク管理機能", type: :system do
         visit root_path
         task_list = all("tbody tr")
         # binding.pry
-        expect(task_list[0]).to have_content "new_task"
-        expect(task_list[1]).to have_content "test_name"
+        expect(task_list[0]).to have_content "name2"
+        expect(task_list[1]).to have_content "name1"
+      end
+    end
+    context "昇順ボタンを押した場合" do
+      it "タスクが終了期限の昇順に並んでいること" do
+        visit root_path
+        click_link "▲"
+        sort_list = all(".sort")
+        # binding.pry
+        expect(sort_list[0]).to have_content "name1"
+        expect(sort_list[1]).to have_content "name2"
+      end
+    end
+    context "降順ボタンを押した場合" do
+      it "タスクが終了期限の降順に並んでいること" do
+        visit root_path
+        click_link "▲"
+        click_link "▼"
+        sort_list = all(".sort")
+        expect(sort_list[0]).to have_content "name2"
+        expect(sort_list[1]).to have_content "name1"
       end
     end
   end
@@ -38,7 +58,7 @@ RSpec.describe "タスク管理機能", type: :system do
         click_button "登録する"
         visit root_path
         expect(page).to have_content "hello"
-        expect(page).to have_content "world"
+        # expect(page).to have_content "world"
       end
     end
   end
@@ -46,8 +66,8 @@ RSpec.describe "タスク管理機能", type: :system do
     context "任意のタスク詳細画面に遷移した場合" do
       it "当該タスクの内容が表示されたページに遷移すること" do
         visit task_path(@task)
-        expect(page).to have_content "test_name"
-        expect(page).to have_content "test_description"
+        expect(page).to have_content "name1"
+        expect(page).to have_content "description1"
         # expect(page).to have_content "ccc"
       end
     end
