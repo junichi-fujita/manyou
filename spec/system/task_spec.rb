@@ -6,6 +6,7 @@ RSpec.describe "タスク管理機能", type: :system do
 
   before do
     @task = create(:task)
+    @second_task = create(:second_task)
   end
 
   describe "タスク一覧画面" do
@@ -15,7 +16,16 @@ RSpec.describe "タスク管理機能", type: :system do
         expect(page).to have_content "test_name"
         expect(page).to have_content "test_description"
         # expect(page).to have_content "ccc"
-
+      end
+    end
+    context "複数のタスクを作成した場合" do
+      it "タスクが作成日時の降順に並んでいること" do
+        # new_task = create(:task, name: "new_task", description: "new_description")
+        visit root_path
+        task_list = all("tbody tr")
+        # binding.pry
+        expect(task_list[0]).to have_content "new_task"
+        expect(task_list[1]).to have_content "test_name"
       end
     end
   end
