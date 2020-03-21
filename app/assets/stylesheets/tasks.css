@@ -2,4 +2,8 @@ div.field_with_errors {
   background-color: #fcc;
   padding: 2px;
 }
+
+#logo {
+  text-decoration: none;
+}
 /*# sourceMappingURL=tasks.css.map */

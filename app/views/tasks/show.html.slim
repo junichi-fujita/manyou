@@ -15,6 +15,9 @@ table.table.table-hover
       th = Task.human_attribute_name("description")
       td = simple_format(@task.description, {}, wrapper_tag: "div")
     tr
+      th = Task.human_attribute_name("status")
+      td = Task.human_attribute_name("status_#{@task.status}")
+    tr
       th = Task.human_attribute_name("end_date")
       td = @task.end_date.try(:strftime, "%Y年%m月%d日 %H時%M分")
     tr

@@ -58,6 +58,7 @@ class TasksController < ApplicationController
       :created_at,
       :updated_at,
       :end_date,
+      :status
     )
   end
 end

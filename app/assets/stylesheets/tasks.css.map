@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,GAAG,AAAA,kBAAkB,CAAC;EACpB,gBAAgB,EAAE,IAAI;EACtB,OAAO,EAAE,GAAG;CACb",
+    "mappings": "AAAA,AAAA,GAAG,AAAA,kBAAkB,CAAC;EACpB,gBAAgB,EAAE,IAAI;EACtB,OAAO,EAAE,GAAG;CACb;;AAED,AAAA,KAAK,CAAC;EACJ,eAAe,EAAE,IAAI;CACtB",
     "sources": [
         "tasks.scss"
     ],
