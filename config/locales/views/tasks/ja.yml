@@ -1,0 +1,17 @@
+ja:
+  tasks:
+    index:
+      title: タスク一覧
+      update: 編集
+      destroy: 削除
+      confirm: "タスク「%{task_name}」を削除します。よろしいですか？"
+    new:
+      title: タスクの新規登録
+      index: 一覧
+    show:
+      title: タスクの詳細
+      index: 一覧
+      update: 編集
+    edit:
+      title: タスクの編集
+      index: 一覧

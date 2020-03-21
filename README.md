@@ -27,3 +27,20 @@
 |----|----|
 |task_id|integer|
 |label_id|integer|
+
+## herokuへのデプロイ方法
+
+- herokuへlogin  
+`heroku login`
+
+- herokuに新しいアプリケーションを作成  
+`heroku create`
+
+- herokuにデプロイする  
+`git push heroku master`
+
+- データベースの移行  
+`heroku run rails db:migrate`
+
+- アプリケーションにアクセスする  
+`https://アプリ名.herokuapp.com/`

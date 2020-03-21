@@ -1,0 +1,6 @@
+- if obj.errors.present?
+  #errors.alert.alert-danger
+    h3 = t("errors.header", count: obj.errors.count)
+    ul
+      - obj.errors.full_messages.each do |msg|
+        li = msg
