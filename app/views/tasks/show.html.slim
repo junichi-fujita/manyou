@@ -1,23 +1,23 @@
-h1 タスクの詳細
+h1 = t ".title"
 
 .nav.justify-content-end
-  = link_to "一覧", root_path, class: "nav-link"
+  = link_to t(".index"), root_path, class: "nav-link"
 
 table.table.table-hover
   tbody
     tr
-      th ID
+      th = Task.human_attribute_name("id")
       td = @task.id
     tr
-      th 名称
+      th = Task.human_attribute_name("name")
       td = @task.name
     tr
-      th 詳しい説明
+      th = Task.human_attribute_name("description")
       td = simple_format(@task.description, {}, wrapper_tag: "div")
     tr
-      th 登録日時
+      th = Task.human_attribute_name("created_at")
       td = @task.created_at
     tr
-      th 更新日時
+      th = Task.human_attribute_name("updated_at")
       td = @task.updated_at
-= link_to "編集", edit_task_path, class: "btn btn-primary mr-3"
+= link_to t(".update"), edit_task_path, class: "btn btn-primary mr-3"

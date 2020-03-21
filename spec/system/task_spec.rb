@@ -25,7 +25,7 @@ RSpec.describe "タスク管理機能", type: :system do
         visit new_task_path
         fill_in "task_name", with: "hello"
         fill_in "task_description", with: "world"
-        click_button "Create Task"
+        click_button "登録する"
         visit root_path
         expect(page).to have_content "hello"
         expect(page).to have_content "world"
