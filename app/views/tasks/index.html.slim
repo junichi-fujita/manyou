@@ -17,8 +17,8 @@ table.table.table-hover
       th = Task.human_attribute_name("name")
       th 
         = Task.human_attribute_name("priority")
-        = link_to "▲", root_path(priority_num: "asc"), class: "ml-2"
-        = link_to "▼", root_path(priority_num: "desc"), class: "ml-2"
+        = link_to "▲", root_path(priority_num: "asc"), class: "ml-2", id: "pri_asc"
+        = link_to "▼", root_path(priority_num: "desc"), class: "ml-2", id: "pri_desc"
       th 
         = Task.human_attribute_name("status")
         #form
@@ -27,8 +27,8 @@ table.table.table-hover
               = f.submit "送信"
       th 
         = Task.human_attribute_name("end_date")
-        = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "asc"
-        = link_to "▼", root_path(sort_end_date: "desc"), class: "ml-2", id: "desc"
+        = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "end_asc"
+        = link_to "▼", root_path(sort_end_date: "desc"), class: "ml-2", id: "end_desc"
       th
   tbody
     - @tasks.each do |task|
