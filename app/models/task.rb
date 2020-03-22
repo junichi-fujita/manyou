@@ -22,7 +22,7 @@ class Task < ApplicationRecord
       st_arr = q_arr.select { |n| n =~ /^未着手$|^着手済$|^完了$/}.map { |n| st_val[n] }
       name_arr = q_arr.reject { |n| n =~ /^未着手$|^着手済$|^完了$/}
       rel = order("id")
-      
+
       if query.present?
         rel = rel.where(
           status: st_arr
@@ -32,6 +32,11 @@ class Task < ApplicationRecord
           ))
       end
       rel
+    end
+
+    def search_status(query)
+      rel = order("id")
+      rel = rel.where("status = ?", query)
     end
   end
 end

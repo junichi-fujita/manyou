@@ -15,7 +15,12 @@ table.table.table-hover
   thead.thead-default
     tr
       th = Task.human_attribute_name("name")
-      th = Task.human_attribute_name("status")
+      th 
+        = Task.human_attribute_name("status")
+        #form
+          = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
+              = f.select :q_status, Task.status_options
+              = f.submit "送信"
       th 
         = Task.human_attribute_name("end_date")
         = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "asc"
@@ -25,7 +30,7 @@ table.table.table-hover
     - @tasks.each do |task|
       tr.sort
         td = link_to task.name, task_path(task)
-        td = Task.human_attribute_name("status_#{task.status}")
+        td = Task.human_attribute_name("status_#{task.status}") 
         td = task.end_date.try(:strftime, "%Y年%m月%d日 %H時%M分")
         td 
           = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"

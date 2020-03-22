@@ -12,7 +12,11 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:search][:q])
+    if params[:search][:q]
+      @tasks = Task.search(params[:search][:q])
+    elsif params[:search][:q_status]
+      @tasks = Task.search_status(params[:search][:q_status])
+    end
     render "index"
   end
 
