@@ -3,15 +3,15 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_end_date] == "asc"
-      @tasks = Task.order(end_date: :asc)
+      @tasks = Task.order(end_date: :asc).page(params[:page]).per(5)
     elsif params[:sort_end_date] == "desc"
-      @tasks = Task.order(end_date: :desc)
+      @tasks = Task.order(end_date: :desc).page(params[:page]).per(5)
     elsif params[:priority_num] == "asc"
-      @tasks = Task.order(priority: :asc)
+      @tasks = Task.order(priority: :asc).page(params[:page]).per(5)
     elsif params[:priority_num] == "desc"
-      @tasks = Task.order(priority: :desc)
+      @tasks = Task.order(priority: :desc).page(params[:page]).per(5)
     else
-      @tasks = Task.order(created_at: :desc)
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
   end
 

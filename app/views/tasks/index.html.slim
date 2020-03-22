@@ -41,3 +41,5 @@ table.table.table-hover
           = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"
           = link_to t(".destroy"), task, method: :delete, 
             data: { confirm: t(".confirm", task_name: task.name) }, class: "btn btn-danger"
+.mb-3
+  = paginate @tasks
