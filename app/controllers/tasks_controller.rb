@@ -17,9 +17,9 @@ class TasksController < ApplicationController
 
   def search
     if params[:search][:q]
-      @tasks = Task.search(params[:search][:q])
+      @tasks = Task.search(params[:search][:q]).page(params[:page]).per(5)
     elsif params[:search][:q_status]
-      @tasks = Task.search_status(params[:search][:q_status])
+      @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
     end
     render "index"
   end
