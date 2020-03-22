@@ -54,7 +54,6 @@ RSpec.describe "タスク管理機能", type: :system do
     context "優先順位の昇順ボタンを押した場合" do
       it "優先順位が優先度低い順に並んでいること" do
         # visit root_path
-        # wait.until { driver.find_element(:id, "pri_asc").displayed? }
         click_on "pri_asc"
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name1"
