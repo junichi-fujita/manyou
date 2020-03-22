@@ -33,12 +33,14 @@ class Task < ApplicationRecord
           status: status_arr
           ).or(rel.search_subject(name_arr))
       end
+      # binding.pry
       rel
     end
 
     def search_status(query)
       rel = order("id")
       rel = rel.where("status = ?", query)
+      # binding.pry
     end
   end
 end
