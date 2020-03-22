@@ -2,6 +2,12 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true, length: { maximum: 255 }
 
+  enum priority: {
+    low: 0,
+    middle: 1,
+    high: 2
+  }
+
   scope :search_subject, -> (name_arr) { where("name LIKE ?", name_arr.map{|n|"%#{n}%"})}
 
   STATUS_VALUES = %w(yet started done)

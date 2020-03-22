@@ -16,6 +16,10 @@ table.table.table-hover
     tr
       th = Task.human_attribute_name("name")
       th 
+        = Task.human_attribute_name("priority")
+        = link_to "▲", root_path(priority_num: "asc"), class: "ml-2"
+        = link_to "▼", root_path(priority_num: "desc"), class: "ml-2"
+      th 
         = Task.human_attribute_name("status")
         #form
           = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
@@ -30,8 +34,9 @@ table.table.table-hover
     - @tasks.each do |task|
       tr.sort
         td = link_to task.name, task_path(task)
+        td = task.priority
         td = Task.human_attribute_name("status_#{task.status}") 
-        td = task.end_date.try(:strftime, "%Y年%m月%d日 %H時%M分")
+        td = task.end_date.try(:strftime, "%Y年%m月%d日")
         td 
           = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"
           = link_to t(".destroy"), task, method: :delete, 

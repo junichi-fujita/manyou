@@ -6,6 +6,10 @@ class TasksController < ApplicationController
       @tasks = Task.order(end_date: :asc)
     elsif params[:sort_end_date] == "desc"
       @tasks = Task.order(end_date: :desc)
+    elsif params[:priority_num] == "asc"
+      @tasks = Task.order(priority: :asc)
+    elsif params[:priority_num] == "desc"
+      @tasks = Task.order(priority: :desc)
     else
       @tasks = Task.order(created_at: :desc)
     end
@@ -67,7 +71,8 @@ class TasksController < ApplicationController
       :created_at,
       :updated_at,
       :end_date,
-      :status
+      :status,
+      :priority,
     )
   end
 end
