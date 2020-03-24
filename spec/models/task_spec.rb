@@ -42,4 +42,27 @@ RSpec.describe Task, type: :model do
     expect(@task.valid?).to eq(false)
   end
 
+  before do
+    @test1 = create(:task)
+    @test2 = create(:second_task)
+    @tasks = Task.all
+  end
+
+  example "名前検索欄でe1を検索するとname1が表示される" do
+    name1 = Task.search_name("e1")
+    expect(name1[0].name).to eq(@test1.name)
+  end
+
+  example "状態検索欄でdoneを検索するとname2が表示される" do
+    name2 = Task.search_status("done")
+    expect(name2[0].name).to eq(@test2.name)
+  end
+
+  example "名前検索欄でe1,状態検索欄でdoneを検索するとname1とname2が表示される" do
+    name3 = Task.search_double("e1","done")
+    expect(name3[0].name).to eq(@test1.name)
+    expect(name3[1].name).to eq(@test2.name)
+
+  end
+
 end

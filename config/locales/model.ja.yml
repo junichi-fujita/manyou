@@ -9,4 +9,11 @@ ja:
         description: タスクの詳細
         created_at: 登録日時
         updated_at: 更新日時
+        end_date: 終了期限
+        status: タスクの状態
+        status_yet: 未着手
+        status_started: 着手済
+        status_done: 完了
+        status_"": ""
+        priority: 優先順位
 

@@ -1,22 +1,46 @@
 h1 = t ".title"
 
-= link_to "新規登録", new_task_path, class: "btn btn-primary"
+.row.mt-3
+  .col
+    = link_to t(".new") , new_task_path, class: "btn btn-primary"
+
+  .col
+    = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
+      = f.select :q_status, Task.status_options
+      = f.text_field :q_name
+      = f.submit t(".search")
+
 
 .mb-3
 table.table.table-hover
   thead.thead-default
     tr
       th = Task.human_attribute_name("name")
-      th = Task.human_attribute_name("description")
-      th = Task.human_attribute_name("created_at")
+      th 
+        = Task.human_attribute_name("priority")
+        = link_to "▲", root_path(priority_num: "asc"), class: "ml-2", id: "pri_asc"
+        = link_to "▼", root_path(priority_num: "desc"), class: "ml-2", id: "pri_desc"
+      th 
+        = Task.human_attribute_name("status")
+        / #form
+        /   = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
+        /       = f.select :q_status, Task.status_options
+        /       = f.submit "送信"
+      th.end_date 
+        = Task.human_attribute_name("end_date")
+        = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "end_asc"
+        = link_to "▼", root_path(sort_end_date: "desc"), class: "ml-2", id: "end_desc"
       th
   tbody
     - @tasks.each do |task|
-      tr
+      tr.sort
         td = link_to task.name, task_path(task)
-        td = task.description
-        td = task.created_at
+        td = task.priority
+        td = Task.human_attribute_name("status_#{task.status}") 
+        td = task.end_date.try(:strftime, "%Y年%m月%d日")
         td 
           = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"
           = link_to t(".destroy"), task, method: :delete, 
             data: { confirm: t(".confirm", task_name: task.name) }, class: "btn btn-danger"
+.mb-3
+  = paginate @tasks

@@ -2,7 +2,32 @@ class TasksController < ApplicationController
   before_action :set_task, only:[:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.order(created_at: :desc)
+    if params[:sort_end_date] == "asc"
+      @tasks = Task.order(end_date: :asc).page(params[:page]).per(5)
+    elsif params[:sort_end_date] == "desc"
+      @tasks = Task.order(end_date: :desc).page(params[:page]).per(5)
+    elsif params[:priority_num] == "asc"
+      @tasks = Task.order(priority: :asc).page(params[:page]).per(5)
+    elsif params[:priority_num] == "desc"
+      @tasks = Task.order(priority: :desc).page(params[:page]).per(5)
+    else
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
+    end
+  end
+
+  def search
+    if params[:search][:q_name] && params[:search][:q_status]
+      @tasks = Task.search_double(params[:search][:q_name], 
+        params[:search][:q_status]).page(params[:page]).per(5)
+    elsif params[:search][:q_name] != ""
+      # binding.pry
+      @tasks = Task.search_name(params[:search][:q_name]).page(params[:page]).per(5)
+    elsif params[:search][:q_status] != ""
+      @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+    else
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
+    end
+    render "index"
   end
 
   def new
@@ -51,6 +76,9 @@ class TasksController < ApplicationController
       :description,
       :created_at,
       :updated_at,
+      :end_date,
+      :status,
+      :priority,
     )
   end
 end
