@@ -1,6 +1,7 @@
 require 'rails_helper'
 require 'selenium-webdriver'
-# wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+# driver = Selenium::WebDriver.for :chrome
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
 
 RSpec.describe "タスク管理機能", type: :system do
   # before do
@@ -12,7 +13,7 @@ RSpec.describe "タスク管理機能", type: :system do
     @second_task = create(:second_task)
     visit root_path
   end
-
+  #ok
   describe "タスク一覧画面" do
     context "タスクを作成した場合" do
       it "作成済のタスクが表示されること" do
@@ -21,11 +22,12 @@ RSpec.describe "タスク管理機能", type: :system do
         # expect(page).to have_content "ccc"
       end
     end
+    #ok
     context "複数のタスクを作成した場合" do
       it "タスクが作成日時の降順に並んでいること" do
         # new_task = create(:task, name: "new_task", description: "new_description")
         # visit root_path
-        task_list = all("tbody tr")
+        task_list = all(".sort")
         # binding.pry
         expect(task_list[0]).to have_content "name2"
         expect(task_list[1]).to have_content "name1"
@@ -34,9 +36,12 @@ RSpec.describe "タスク管理機能", type: :system do
     context "終了期限の昇順ボタンを押した場合" do
       it "タスクが終了期限の昇順に並んでいること" do
         # visit root_path
+
         click_on "end_asc"
+        sleep 0.5
+        # wait.until(element.displayed?)
         sort_list = all(".sort")
-        # binding.pry
+        # wait.until{element.displayed?}
         expect(sort_list[0]).to have_content "name1"
         expect(sort_list[1]).to have_content "name2"
       end
@@ -45,6 +50,7 @@ RSpec.describe "タスク管理機能", type: :system do
       it "タスクが終了期限の降順に並んでいること" do
         # visit root_path
         click_on "end_desc"
+        sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name2"
         expect(sort_list[1]).to have_content "name1"
@@ -55,6 +61,7 @@ RSpec.describe "タスク管理機能", type: :system do
       it "優先順位が優先度低い順に並んでいること" do
         # visit root_path
         click_on "pri_asc"
+        sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name1"
         expect(sort_list[1]).to have_content "name2"
@@ -64,6 +71,7 @@ RSpec.describe "タスク管理機能", type: :system do
     context "優先順位の降順ボタンを押した場合" do
       it "優先順位が優先度高い順に並んでいること" do
         click_on "pri_desc"
+        sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name2"
         expect(sort_list[1]).to have_content "name1"
