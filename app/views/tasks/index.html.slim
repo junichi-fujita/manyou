@@ -6,7 +6,8 @@ h1 = t ".title"
 
   .col
     = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
-      = f.text_field :q
+      = f.select :q_status, Task.status_options
+      = f.text_field :q_name
       = f.submit t(".search")
 
 
@@ -21,11 +22,11 @@ table.table.table-hover
         = link_to "▼", root_path(priority_num: "desc"), class: "ml-2", id: "pri_desc"
       th 
         = Task.human_attribute_name("status")
-        #form
-          = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
-              = f.select :q_status, Task.status_options
-              = f.submit "送信"
-      th 
+        / #form
+        /   = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
+        /       = f.select :q_status, Task.status_options
+        /       = f.submit "送信"
+      th.end_date 
         = Task.human_attribute_name("end_date")
         = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "end_asc"
         = link_to "▼", root_path(sort_end_date: "desc"), class: "ml-2", id: "end_desc"

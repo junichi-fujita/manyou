@@ -16,10 +16,16 @@ class TasksController < ApplicationController
   end
 
   def search
-    if params[:search][:q]
-      @tasks = Task.search(params[:search][:q]).page(params[:page]).per(5)
-    elsif params[:search][:q_status]
+    if params[:search][:q_name] && params[:search][:q_status]
+      @tasks = Task.search_double(params[:search][:q_name], 
+        params[:search][:q_status]).page(params[:page]).per(5)
+    elsif params[:search][:q_name] != ""
+      # binding.pry
+      @tasks = Task.search_name(params[:search][:q_name]).page(params[:page]).per(5)
+    elsif params[:search][:q_status] != ""
       @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+    else
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
     render "index"
   end

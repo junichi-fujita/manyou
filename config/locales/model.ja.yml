@@ -14,5 +14,6 @@ ja:
         status_yet: 未着手
         status_started: 着手済
         status_done: 完了
+        status_"": ""
         priority: 優先順位
 

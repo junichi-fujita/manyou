@@ -10,7 +10,7 @@ class Task < ApplicationRecord
 
   scope :search_subject, -> (name_arr) { where("name LIKE ?", name_arr.map{|n|"%#{n}%"})}
 
-  STATUS_VALUES = %w(yet started done)
+  STATUS_VALUES = %w("" yet started done)
   class << self
     def status_text(status)
       I18n.t("activerecord.attributes.task.status_#{status}")
@@ -20,27 +20,28 @@ class Task < ApplicationRecord
       STATUS_VALUES.map { |status| [status_text(status), status]}
     end
 
-    def search(query)
-      query_arr = query.split(/[[:blank:]]+/)
-      status_hash = { "未着手" => "yet", "着手済" => "started", "完了" => "done" }
-
-      status_arr = query_arr.select { |n| n =~ /^未着手$|^着手済$|^完了$/}.map { |n| status_hash[n] }
-      name_arr = query_arr.reject { |n| n =~ /^未着手$|^着手済$|^完了$/}
+    def search_name(query)
       rel = order("id")
-
       if query.present?
-        rel = rel.where(
-          status: status_arr
-          ).or(rel.search_subject(name_arr))
+        rel = rel.where("name LIKE ?", "%#{query}%")
       end
-      # binding.pry
       rel
     end
 
     def search_status(query)
       rel = order("id")
-      rel = rel.where("status = ?", query)
-      # binding.pry
+      if query.present?
+        rel = rel.where(status: query)
+      end
+      rel
+    end
+    
+    def search_double(q_name, q_status)
+      rel = order("id")
+      if q_name.present? && q_status.present?
+        rel = rel.where("name LIKE ?", "%#{q_name}%").or(rel.where(status: q_status))
+      end
+      rel
     end
   end
 end
