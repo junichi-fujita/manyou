@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user:
     attributes:
       task:
         id: ID
@@ -16,4 +17,12 @@ ja:
         status_done: 完了
         status_"": ""
         priority: 優先順位
+      user:
+        id: ID
+        name: 氏名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+        created_at: 登録日時
+        updated_at: 更新日時
 
