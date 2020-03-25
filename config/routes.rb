@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :tasks, except: :index do
     get "search", on: :collection
   end
+  resources :users, only: [:new, :show, :create]
 end
