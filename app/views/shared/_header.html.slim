@@ -6,7 +6,7 @@
 
   .mr-3
     - if current_user
-      = current_user.name
+      = link_to current_user.name, user_path(current_user)
       |  
       = link_to "ログアウト", session_path,
         method: :delete, data: { confirm: "ログアウトしますか？" }
