@@ -8,9 +8,10 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .app-title.navbar.nabvar-expand-md.navbar-light.bg-light
-      .navbar-brand = link_to "Tasktree", root_path, id: "logo"
+    header
+      = render "shared/header"
     .container
-      - if flash.notice.present?
-        .alert.alert-success = flash.notice
-      = yield
+      main
+        - if flash.notice.present?
+          .alert.alert-success = flash.notice
+        = yield

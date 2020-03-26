@@ -4,4 +4,5 @@ Rails.application.routes.draw do
     get "search", on: :collection
   end
   resources :users, only: [:new, :show, :create]
+  resource :session, only: [:create, :destroy]
 end

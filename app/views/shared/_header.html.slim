@@ -1,0 +1,20 @@
+.row.align-items-center.justify-content-between.bg-light
+
+  .app-title.navbar.navbar-expand-md.navbar-light.ml-2
+    .navbar-brand  Tasktree
+
+
+  .mr-3
+    - if current_user
+      = current_user.name
+      |  
+      = link_to "ログアウト", session_path,
+        method: :delete, data: { confirm: "ログアウトしますか？" }
+    - else
+      #login
+        - if flash.alert
+          p = flash.alert
+        = form_with scope: :session, url: session_path, local: true do |f|
+          = f.text_field :email, class: "mr-2", placeholder: "メールアドレス"
+          = f.password_field :password, class: "mr-2", placeholder: "パスワード"
+          = f.submit "ログイン", class: "btn btn-primary"
