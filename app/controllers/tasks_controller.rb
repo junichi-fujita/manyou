@@ -4,29 +4,33 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_end_date] == "asc"
-      @tasks = Task.order(end_date: :asc).page(params[:page]).per(5)
+      @tasks = current_user.tasks.order(end_date: :asc).page(params[:page]).per(5)
     elsif params[:sort_end_date] == "desc"
-      @tasks = Task.order(end_date: :desc).page(params[:page]).per(5)
+      @tasks = current_user.tasks.order(end_date: :desc).page(params[:page]).per(5)
     elsif params[:priority_num] == "asc"
-      @tasks = Task.order(priority: :asc).page(params[:page]).per(5)
+      @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(5)
     elsif params[:priority_num] == "desc"
-      @tasks = Task.order(priority: :desc).page(params[:page]).per(5)
+      @tasks = current_user.tasks.order(priority: :desc).page(params[:page]).per(5)
     else
-      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
+      @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
     end
   end
 
   def search
-    if params[:search][:q_name] && params[:search][:q_status]
-      @tasks = Task.search_double(params[:search][:q_name], 
+    if params[:search][:q_name] != "" && params[:search][:q_status] =! ""
+      @tasks = current_user.tasks.search_double(params[:search][:q_name], 
         params[:search][:q_status]).page(params[:page]).per(5)
+      # binding.pry
+
     elsif params[:search][:q_name] != ""
       # binding.pry
-      @tasks = Task.search_name(params[:search][:q_name]).page(params[:page]).per(5)
+      @tasks = current_user.tasks.search_name(params[:search][:q_name]).page(params[:page]).per(5)
     elsif params[:search][:q_status] != ""
-      @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+      @tasks = current_user.tasks.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+      # binding.pry
     else
       @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
+      # binding.pry
     end
     render "index"
   end
@@ -43,7 +47,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to root_path, notice: "「#{@task.name}」を作成しました。"
     else
