@@ -6,6 +6,9 @@ h1 = t ".title"
 table.table.table-hover
   tbody
     tr
+      th = User.human_attribute_name("name")
+      td = @task.user.name
+    tr
       th = Task.human_attribute_name("id")
       td = @task.id
     tr
