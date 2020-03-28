@@ -18,7 +18,7 @@ if Rails.env == "development"
       end_date: "2020-03-22 08:26:00",
       priority: i % 3,
       status: status_arr[i % 3],
-      user_id: i % 5 + 1
+      user_id: i % 10 + 1
     )
   end
 end
