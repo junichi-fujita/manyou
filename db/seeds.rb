@@ -6,7 +6,8 @@ if Rails.env == "development"
       name: "user#{i + 1}",
       email: "user#{i + 1}@test.com",
       password: "aaa",
-      password_confirmation: "aaa"
+      password_confirmation: "aaa",
+      administrator: (i == 0)
     )
   end
 
