@@ -29,6 +29,7 @@ class UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+      :administrator,
     )
   end
 end

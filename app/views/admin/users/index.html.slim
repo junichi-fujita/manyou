@@ -1,5 +1,7 @@
 h1 管理者のトップページ
 
+= link_to "ユーザーの新規作成", new_admin_user_path
+
 .mb-3
 table.table.table-hover
   thead.thead-default
@@ -8,6 +10,7 @@ table.table.table-hover
       th = User.human_attribute_name("name")
       th = User.human_attribute_name("email")
       th = User.human_attribute_name("administrator")
+      th
   tbody
     - @users.each do |user|
       tr
@@ -15,3 +18,8 @@ table.table.table-hover
         td = link_to user.name, user
         td = user.email
         td = user.administrator? ? "⭕️" : "❌"
+        td
+          = link_to "変更", edit_admin_user_path(user)
+          |  |  
+          = link_to "削除", admin_user_path(user), method: :delete,
+            data: { confirm: "本当に削除しますか？" }
