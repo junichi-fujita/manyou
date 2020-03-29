@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  # before_action :only_my_page, only: [:show]
+
   def new
     if current_user
       redirect_to root_path
@@ -9,6 +11,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_path if @user != current_user
   end
 
   def create
@@ -31,5 +34,11 @@ class UsersController < ApplicationController
       :password_confirmation,
       :administrator,
     )
+  end
+
+  def only_my_pege
+    if User.find(params: id) != current_user.id
+      redirect_to root_path
+    end
   end
 end
