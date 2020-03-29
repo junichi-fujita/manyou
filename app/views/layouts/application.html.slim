@@ -14,4 +14,6 @@ html
       main
         - if flash.notice.present?
           .alert.alert-success = flash.notice
+        - elsif flash.alert.present?
+          .alert.alert-danger = flash.alert
         = yield
