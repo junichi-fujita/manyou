@@ -1,5 +1,7 @@
 h1 ユーザー登録
 
+= render "shared/errors", obj: @user
+
 = form_with model: @user, local: true do |f|
   .form-group
     = f.label :name

@@ -14,8 +14,4 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_path
     end
   end
-
-  def admin_user
-    current_user.administrator
-  end
 end

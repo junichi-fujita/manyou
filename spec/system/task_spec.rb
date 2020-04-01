@@ -9,9 +9,13 @@ RSpec.describe "タスク管理機能", type: :system do
   # end
 
   before do
-    @task = create(:task)
-    @second_task = create(:second_task)
-    visit root_path
+    @user = create(:user)
+    @task = create(:task, user: @user)
+    @second_task = create(:second_task, user: @user)
+    visit new_user_path
+    fill_in "t_email", with: "sample1@sample.com"
+    fill_in "t_password", with: "aaa"
+    click_on "ログイン"
   end
   #ok
   describe "タスク一覧画面" do

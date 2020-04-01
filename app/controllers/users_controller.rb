@@ -11,14 +11,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if admin_user
+    if current_user.administrator?
       render "show"
     elsif @user == current_user
       render "show"
     else
       redirect_to root_path
     end
-    # redirect_to root_path if @user != current_user
   end
 
   def create
