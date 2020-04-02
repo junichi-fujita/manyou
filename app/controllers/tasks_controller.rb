@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :login_required
-  before_action :set_task, only:[:show, :edit, :update, :destroy]
+  before_action :set_task, only:[:update, :destroy]
 
   def index
     if params[:sort_end_date] == "asc"
@@ -40,10 +40,26 @@ class TasksController < ApplicationController
   end
 
   def show
-
+    @task = Task.find(params[:id])
+    if current_user.administrator?
+      render "show"
+    elsif @task.user_id == current_user.id
+      # binding.pry
+      render "show"
+    else
+      redirect_to root_path
+    end
   end
 
   def edit
+    @task = Task.find(params[:id])
+    if current_user.administrator?
+      render "edit"
+    elsif @task.user_id == current_user.id
+      render "edit"
+    else
+      redirect_to root_path
+    end
   end
 
   def create
