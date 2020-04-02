@@ -21,6 +21,7 @@ ja:
         id: ID
         name: ユーザー名
         email: メールアドレス
+        tasks_counts: タスク数
         password: パスワード
         password_confirmation: パスワード（確認用）
         created_at: 登録日時
