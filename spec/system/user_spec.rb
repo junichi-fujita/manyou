@@ -58,7 +58,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         expect(page).to have_content "ユーザー詳細"
       end
       it '他人の詳細画面にとぶとタスク一覧ページに遷移する' do
-        visit user_path(1)
+        visit user_path(1000)
         expect(page).to have_content "タスク一覧"
       end
       it 'ログアウトできること' do
