@@ -12,9 +12,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if current_user.administrator?
-      render "show"
+      render :show
     elsif @user == current_user
-      render "show"
+      render :show
     else
       redirect_to root_path
     end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(@user), notice: "「#{@user.name}」を登録しました。"
     else
-      render "new"
+      render :new
     end
   end
 

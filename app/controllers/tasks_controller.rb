@@ -67,7 +67,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to root_path, notice: "「#{@task.name}」を作成しました。"
     else
-      render "new"
+      render :new
     end
   end
 
@@ -76,7 +76,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: "「#{@task.name}」を更新しました。"
     else
-      render "edit"
+      render :edit
     end
   end
 

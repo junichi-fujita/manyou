@@ -14,7 +14,7 @@ class Admin::UsersController < Admin::Base
     if @user.save
       redirect_to admin_root_path, notice: "「#{@user.name}」を登録しました。"
     else
-      render "new"
+      render :new
     end
   end
 
@@ -26,7 +26,7 @@ class Admin::UsersController < Admin::Base
     if @user.save
       redirect_to admin_root_path, notice: "「#{@user.name}」を変更しました。"
     else
-      render "edit"
+      render :edit
     end
   end
 
