@@ -4,9 +4,9 @@ class Admin::Base < ApplicationController
   private
 
   def admin_login_required
-    if !current_user
+    if logged_in? == false
       redirect_to new_user_path
-    elsif !current_user.administrator?
+    elsif logged_in_as_admin? == false
       redirect_to root_path
     end
   end
