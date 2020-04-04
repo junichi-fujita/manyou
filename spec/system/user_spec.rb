@@ -29,10 +29,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'user_password', with: 'aaa'
         fill_in 'user_password_confirmation', with: 'aaa'
         click_on '登録する'
-        # binding.pry
-        # expect(current_path).to eq user_path(id: 1)
         expect(page).to have_content "「test」を登録しました。"
-        # binding.pry
       end
       it 'ログインしていない時はログイン画面に飛ぶテスト' do
         visit root_path
@@ -45,7 +42,6 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
     context 'ユーザーのデータがあり、ログインしていない状態で' do
       it 'ログインのテスト' do
         login
-        # binding.pry
         expect(current_path).to eq root_path
       end
     end

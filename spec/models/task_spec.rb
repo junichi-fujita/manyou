@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
 
-  # before do
-  #   @user = User.create(name: "test", email: "test@test.com", password: "aaa", administrator: false)
-  # end
-
   example "名前を空白にしてはいけない。" do
     task = Task.new(name: nil, description: "aaa")
     task.valid?
@@ -34,7 +30,6 @@ RSpec.describe Task, type: :model do
 
     example "名前検索欄でe1を検索するとname1が表示される" do
       name1 = Task.search_name("e1")
-      # binding.pry
       expect(name1[0].name).to eq(@test1.name)
     end
   

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  # before_action :only_my_page, only: [:show]
-
+  
   def new
     if current_user
       redirect_to root_path

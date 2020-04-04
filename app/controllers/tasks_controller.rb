@@ -20,17 +20,13 @@ class TasksController < ApplicationController
     if params[:search][:q_name] != "" && params[:search][:q_status] =! ""
       @tasks = current_user.tasks.search_double(params[:search][:q_name], 
         params[:search][:q_status]).page(params[:page]).per(5)
-      # binding.pry
 
     elsif params[:search][:q_name] != ""
-      # binding.pry
       @tasks = current_user.tasks.search_name(params[:search][:q_name]).page(params[:page]).per(5)
     elsif params[:search][:q_status] != ""
       @tasks = current_user.tasks.search_status(params[:search][:q_status]).page(params[:page]).per(5)
-      # binding.pry
     else
       @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
-      # binding.pry
     end
     render "index"
   end
@@ -44,7 +40,6 @@ class TasksController < ApplicationController
     if current_user.administrator?
       render "show"
     elsif @task.user_id == current_user.id
-      # binding.pry
       render "show"
     else
       redirect_to root_path
