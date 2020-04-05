@@ -8,6 +8,10 @@ class User < ApplicationRecord
     throw :abort if User.where(administrator: true).count ==  1 && self.administrator?
   end
 
+  def own?(task)
+    self.id == task.user_id
+  end
+
   private
 
   def only_administrator

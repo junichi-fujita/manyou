@@ -28,7 +28,7 @@ class TasksController < ApplicationController
     else
       @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
-    render "index"
+    render :index
   end
 
   def new
@@ -37,10 +37,10 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    if current_user.administrator?
-      render "show"
-    elsif @task.user_id == current_user.id
-      render "show"
+    if logged_in_as_admin?
+      render :show
+    elsif current_user.own?(@task)
+      render :show
     else
       redirect_to root_path
     end
@@ -49,9 +49,9 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     if current_user.administrator?
-      render "edit"
+      render :edit
     elsif @task.user_id == current_user.id
-      render "edit"
+      render :edit
     else
       redirect_to root_path
     end
