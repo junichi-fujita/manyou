@@ -18,8 +18,7 @@ class Admin::UsersController < Admin::Base
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @user.assign_attributes(user_params)
