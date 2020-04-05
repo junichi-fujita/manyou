@@ -3,14 +3,14 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
 
   def login
     visit new_user_path
-    fill_in "t_email", with: "sample2@sample.com"
+    fill_in "t_email", with: "sample2@example.com"
     fill_in "t_password", with: "aaa"
     click_on "ログイン"
   end
 
   def admin_login
     visit new_user_path
-    fill_in "t_email", with: "sample1@sample.com"
+    fill_in "t_email", with: "sample1@example.com"
     fill_in "t_password", with: "aaa"
     click_on "ログイン"
   end
@@ -91,7 +91,6 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
       end
       it '管理者はユーザーの詳細画面にアクセスできる' do
         visit admin_root_path
-        # binding.pry
         click_link "sample2"
         expect(page).to have_content "ユーザー詳細"
       end
