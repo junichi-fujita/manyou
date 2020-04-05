@@ -10,12 +10,12 @@ RSpec.describe Task, type: :model do
 
   example "詳しい記述を空白にしてはいけない。" do
     task = Task.new(name: "aaa", description: nil)
-    task.valid?
+    expect(task).to be_invalid
     expect(task.errors.messages[:description]).to include("を入力してください")
   end
   example "詳しい記述は２５５文字以下でなければならない。" do
     task = Task.new(name: "aaa", description: "a" * 256)
-    task.valid?
+    expect(task).to_not be_valid
     expect(task.errors.messages[:description]).to include("は255文字以内で入力してください")
   end
   
