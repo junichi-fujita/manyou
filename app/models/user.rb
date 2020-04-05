@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true
+  validates :email, uniqueness: true
   after_save :only_administrator, on: :update
   before_destroy do
     throw :abort if User.where(administrator: true).count ==  1 && self.administrator?
