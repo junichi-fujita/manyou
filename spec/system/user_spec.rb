@@ -1,6 +1,9 @@
 require 'rails_helper'
 RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :system do
 
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user2) }
+
   def login
     visit new_user_path
     fill_in "t_email", with: "sample2@example.com"
@@ -15,10 +18,10 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
     click_on "ログイン"
   end
 
-  before do
-    @user1 = create(:user)
-    @user2 = create(:user2)
-  end
+  # before do
+  #   @user1 = create(:user)
+  #   @user2 = create(:user2)
+  # end
 
   describe 'ユーザ登録のテスト' do
     context 'ユーザのデータがなくログインしていない場合' do
@@ -39,22 +42,21 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
   end
 
   describe 'セッション機能テスト' do
+    before do
+      login
+    end
     context 'ユーザーのデータがあり、ログインしていない状態で' do
       it 'ログインのテスト' do
-        login
         expect(current_path).to eq root_path
       end
     end
     context 'ログインした状態で' do
-      before do
-        login
-      end
       it '自分の詳細画面に飛べること' do
         click_link "sample2"
         expect(page).to have_content "ユーザー詳細"
       end
       it '他人の詳細画面にとぶとタスク一覧ページに遷移する' do
-        visit user_path(1000)
+        visit user_path(user.id)
         expect(page).to have_content "タスク一覧"
       end
       it 'ログアウトできること' do
