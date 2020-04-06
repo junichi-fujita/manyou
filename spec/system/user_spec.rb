@@ -18,11 +18,6 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
     click_on "ログイン"
   end
 
-  # before do
-  #   @user1 = create(:user)
-  #   @user2 = create(:user2)
-  # end
-
   describe 'ユーザ登録のテスト' do
     context 'ユーザのデータがなくログインしていない場合' do
       it 'ユーザ新規登録のテスト' do
