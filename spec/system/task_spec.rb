@@ -4,10 +4,21 @@ wait = Selenium::WebDriver::Wait.new(:timeout => 100)
 
 RSpec.describe "タスク管理機能", type: :system do
 
-  before do
-    @user = create(:user)
-    @task = create(:task, user: @user)
-    @second_task = create(:second_task, user: @user)
+  let(:user) { create(:user) }
+  let(:user2) { create(:user2) }
+  let!(:task_admin) { create(:task, user: user) }
+  let!(:second_task_admin) { create(:second_task, user: user) }
+  let!(:task) { create(:task, user: user2) }
+  let!(:second_task) { create(:second_task, user: user2) }
+
+  def login
+    visit new_user_path
+    fill_in "t_email", with: "sample2@example.com"
+    fill_in "t_password", with: "aaa"
+    click_on "ログイン"
+  end
+
+  def admin_login
     visit new_user_path
     fill_in "t_email", with: "sample1@example.com"
     fill_in "t_password", with: "aaa"
@@ -15,6 +26,9 @@ RSpec.describe "タスク管理機能", type: :system do
   end
   
   describe "タスク一覧画面" do
+    before do
+      login
+    end
     context "タスクを作成した場合" do
       it "作成済のタスクが表示されること" do
         expect(page).to have_content "name1"
@@ -70,6 +84,7 @@ RSpec.describe "タスク管理機能", type: :system do
   describe "タスクの登録画面" do
     context "必要項目を入力して、createボタンを押した場合" do
       it "データが保存されていること" do
+        login
         visit new_task_path
         fill_in "task_name", with: "hello"
         fill_in "task_description", with: "world"
@@ -82,9 +97,27 @@ RSpec.describe "タスク管理機能", type: :system do
   describe "タスク詳細画面" do
     context "任意のタスク詳細画面に遷移した場合" do
       it "当該タスクの内容が表示されたページに遷移すること" do
-        visit task_path(@task)
+        login
+        visit task_path(task)
         expect(page).to have_content "name1"
         expect(page).to have_content "description1"
+      end
+    end
+  end
+
+  describe "一般ユーザーまたは管理者での閲覧権限" do
+    context "一般ユーザーでログインし、他人のタスクにアクセスした場合" do
+      it "root画面に遷移する" do
+        login
+        visit task_path(task_admin.id)
+        expect(page).to have_content("タスク一覧")
+      end
+    end
+    context "管理者でログインし、他人のタスクにアクセスした場合" do
+      it "他人のタスクに遷移する" do
+        admin_login
+        visit task_path(task.id)
+        expect(page).to have_content("タスクの詳細")
       end
     end
   end
