@@ -37,9 +37,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    if logged_in_as_admin?
-      render :show
-    elsif current_user.own?(@task)
+    if logged_in_as_admin? || current_user.own?(@task)
       render :show
     else
       redirect_to root_path
@@ -48,9 +46,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    if logged_in_as_admin?
-      render :edit
-    elsif current_user.own?(@task)
+    if logged_in_as_admin? || current_user.own?(@task)
       render :edit
     else
       redirect_to root_path
