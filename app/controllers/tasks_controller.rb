@@ -48,9 +48,9 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    if current_user.administrator?
+    if logged_in_as_admin?
       render :edit
-    elsif @task.user_id == current_user.id
+    elsif current_user.own?(@task)
       render :edit
     else
       redirect_to root_path
