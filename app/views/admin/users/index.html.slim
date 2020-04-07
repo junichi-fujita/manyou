@@ -1,0 +1,28 @@
+h1 管理者のトップページ
+
+.row.justify-content-end
+  = link_to t("new_link"), new_admin_user_path, class: "btn btn-primary", id: "admin_new_user"
+
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th = User.human_attribute_name("id")
+      th = User.human_attribute_name("name")
+      th = User.human_attribute_name("email")
+      th = User.human_attribute_name("tasks_counts")
+      th = User.human_attribute_name("administrator")
+      th
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.id
+        td = link_to user.name, user
+        td = user.email
+        td = user.tasks.count
+        td = user.administrator? ? "⭕️" : "❌"
+        td
+          = link_to t("edit_link"), edit_admin_user_path(user), id: "admin_edit"
+          |  |  
+          = link_to t("delete_link"), admin_user_path(user), method: :delete,
+            data: { confirm: "本当に削除しますか？" }, id: "admin_delete"

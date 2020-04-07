@@ -1,0 +1,22 @@
+.row.align-items-center.justify-content-between.bg-light
+
+  .app-title.navbar.navbar-expand-md.navbar-light.ml-2
+    .navbar-brand  
+      = link_to "Tasktree", root_path, id: "logo"
+
+
+  .mr-3
+    - if current_user&.administrator?
+      = link_to t(:admin), admin_root_path, class: "mr-2"
+    - if current_user
+      = link_to current_user.name, user_path(current_user), class: "mr-2", id: "show"
+      = link_to t(:logout), session_path,
+        method: :delete, data: { confirm: "ログアウトしますか？" }
+    - else
+      #login
+        - if flash.alert
+          p = flash.alert
+        = form_with scope: :session, url: session_path, local: true do |f|
+          = f.text_field :email, class: "mr-2", id: "t_email", placeholder: "メールアドレス"
+          = f.password_field :password, class: "mr-2",id: "t_password", placeholder: "パスワード"
+          = f.submit t(:login), class: "btn btn-primary"
