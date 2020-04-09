@@ -32,4 +32,9 @@ table.table.table-hover
     tr
       th = Task.human_attribute_name("updated_at")
       td = @task.updated_at.try(:strftime, "%Y年%m月%d日 %H時%M分")
+    tr
+      th = "ラベル"
+      td 
+        - @task.labels.each do |label|
+          = label.name + "　"
 = link_to t(".update"), edit_task_path, class: "btn btn-primary mr-3"
