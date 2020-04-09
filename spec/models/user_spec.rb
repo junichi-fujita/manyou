@@ -16,10 +16,9 @@ RSpec.describe User, type: :model do
 
     it "emailの値が一意でなければinvalid" do
       user = create(:user, email: "aaa@aaa.com")
-      user2 = build(:user2, email: "aaa@aaa.com")
-      user2.valid?
-      # binding.pry
-      expect(user2.errors.messages[:email]).to include("はすでに存在します")
+      another_user = build(:user2, email: "aaa@aaa.com")
+      another_user.valid?
+      expect(another_user.errors.messages[:email]).to include("はすでに存在します")
     end
 
     it "管理者が１人の場合、管理者でなくなるような変更はできない" do
