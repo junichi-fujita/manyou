@@ -18,4 +18,10 @@
     = f.datetime_select :end_date,
         start_year: Time.current.year, end_year: Time.current.year + 10,
         use_month_numbers: true
+    /- Label.all.each do |label|
+      = f.check_box :label_ids, { include_hidden: false }, label[:id], class: "mr-2"
+      label = label.name
+  .form-group
+    = f.label "ラベル", class: "mr-2"
+    = f.collection_check_boxes(:label_ids, Label.all, :id, :name)
   = f.submit nil, class: "btn btn-primary"
