@@ -16,7 +16,7 @@ class User < ApplicationRecord
   private
 
   def only_administrator
-    if User.where(administrator: true).count == 0
+    if User.where(administrator: true).count.zero?
       errors.add(:administrator, "のある者は最低１人必要です！")
       raise ActiveRecord::Rollback
     end
