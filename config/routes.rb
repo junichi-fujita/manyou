@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'labels/new'
   namespace :admin do
     root "users#index"
     resources :users, except: [:index, :show]
