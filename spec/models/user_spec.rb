@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe "Userモデルのvalidation" do
+    let(:user) { create(:user) }
     it "nameを空白にするとinvalid" do
       user = build(:user, name: "")
       user.valid?
@@ -22,12 +23,10 @@ RSpec.describe User, type: :model do
     end
 
     it "管理者が１人の場合、管理者でなくなるような変更はできない" do
-      user = create(:user)
       expect(user.update(administrator: false)).to be_falsey
     end
 
     it "管理者が１人の場合、管理者を削除できない" do
-      user = create(:user)
       expect(user.destroy).to be_falsey
     end
   end
