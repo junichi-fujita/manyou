@@ -36,6 +36,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
+  gem 'rails-flog', require: 'flog'
 end
 
 group :development do
@@ -44,6 +45,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop', require: false
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
