@@ -4,27 +4,27 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_end_date] == "asc"
-      @tasks = current_user.tasks.order(end_date: :asc).page(params[:page]).per(5)
+      @tasks = Task.order(end_date: :asc).page(params[:page]).per(5)
     elsif params[:sort_end_date] == "desc"
-      @tasks = current_user.tasks.order(end_date: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(end_date: :desc).page(params[:page]).per(5)
     elsif params[:priority_num] == "asc"
-      @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(5)
+      @tasks = Task.order(priority: :asc).page(params[:page]).per(5)
     elsif params[:priority_num] == "desc"
-      @tasks = current_user.tasks.order(priority: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(priority: :desc).page(params[:page]).per(5)
     else
-      @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
   end
 
   def search
     if params[:search][:q_name] != "" && params[:search][:q_status] =! ""
-      @tasks = current_user.tasks.search_double(params[:search][:q_name], 
+      @tasks = Task.search_double(params[:search][:q_name], 
         params[:search][:q_status]).page(params[:page]).per(5)
 
     elsif params[:search][:q_name] != ""
-      @tasks = current_user.tasks.search_name(params[:search][:q_name]).page(params[:page]).per(5)
+      @tasks = Task.search_name(params[:search][:q_name]).page(params[:page]).per(5)
     elsif params[:search][:q_status] != ""
-      @tasks = current_user.tasks.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+      @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
     else
       @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
