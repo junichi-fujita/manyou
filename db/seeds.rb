@@ -21,4 +21,12 @@ if Rails.env == "development"
       user_id: i % 10 + 1
     )
   end
+
+  Label.create([
+    { name: "Ruby" },
+    { name: "Ruby on Rails" },
+    { name: "Javascript" },
+    { name: "HTML" },
+    { name: "CSS" },
+  ])
 end
