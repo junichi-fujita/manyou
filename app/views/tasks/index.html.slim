@@ -1,15 +1,21 @@
 h1 = t ".title"
 
-.row.mt-3
-  .col
+.row.mt-3.justify-content-between
+  .col-md-4
     = link_to t(".new") , new_task_path, class: "btn btn-primary"
 
-  .col
+  .col-md-5.float-right
     = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
       = f.select :q_status, Task.status_options
       = f.text_field :q_name
       = f.submit t(".search")
 
+  .col-md-3
+    = form_with url: label_search_tasks_path, method: :get, class: 'tasks_search_form' do
+      = select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]),
+                    { prompt: 'タグで絞り込み',
+                      class: 'form-control tasks_select',
+                      onchange: 'submit(this.form);' }
 
 .mb-3
 table.table.table-hover

@@ -31,6 +31,12 @@ class TasksController < ApplicationController
     render :index
   end
 
+  def label_search
+    @tasks = params[:label_id].present? ? Label.find(params[:label_id]).tasks : Task.all
+    @tasks = @tasks.page(params[:page]).per(5)
+    render :index
+  end
+
   def new
     @task = Task.new
   end
@@ -89,7 +95,7 @@ class TasksController < ApplicationController
       :end_date,
       :status,
       :priority,
-      {label_ids: []},
+      label_ids: [],
     )
   end
 end
