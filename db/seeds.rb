@@ -29,4 +29,11 @@ if Rails.env == "development"
     { name: "HTML" },
     { name: "CSS" },
   ])
+
+  50.times do |i|
+    Labeling.create(
+      task_id: "#{i + 1}",
+      label_id: "#{i % 5 + 1}",
+    )
+  end
 end
