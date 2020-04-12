@@ -42,7 +42,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    if logged_in_as_admin? || current_user.own?(@task)
+    if current_user
       render :show
     else
       redirect_to root_path
