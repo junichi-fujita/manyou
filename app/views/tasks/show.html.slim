@@ -36,5 +36,6 @@ table.table.table-hover
       th = "ラベル"
       td 
         - @task.labels.each do |label|
-          = label.name + "　"
+          span.badge.badge-primary = label.name
+          |  
 = link_to t(".update"), edit_task_path, class: "btn btn-primary mr-3"
