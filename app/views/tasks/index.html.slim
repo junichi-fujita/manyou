@@ -11,10 +11,10 @@ h1 = t ".title"
       = f.submit t(".search")
 
   .col-md-3
-    = form_with url: label_search_tasks_path, method: :get, class: 'tasks_search_form' do
+    = form_with url: label_search_tasks_path, method: :get do
       = select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]),
                     { prompt: 'タグで絞り込み',
-                      class: 'form-control tasks_select',
+                      class: 'form-control',
                       onchange: 'submit(this.form);' }
 
 .mb-3
