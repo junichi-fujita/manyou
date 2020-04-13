@@ -26,5 +26,5 @@
         = label.label class: "form-check-label" do
           = label.check_box class: "form-check-input"
           = label.text
-          = link_to "削除", label_path(label.object.id), method: :delete if label.object.id > 5
+          = link_to "削除", label_path(label.object.id), class: "btn btn-outline-danger btn-sm ml-2", method: :delete if label.object.id > 5
   = f.submit nil, class: "btn btn-primary"
