@@ -4,7 +4,7 @@ class LabelsController < ApplicationController
   end
 
   def create
-    @label = Label.new(label_params)
+    @label = current_user.labels.new(label_params)
     if @label.save
       redirect_to new_task_path, notice: "ラベルを作成しました。"
     else
