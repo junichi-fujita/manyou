@@ -21,7 +21,7 @@
   .form-group
     = f.label "ラベル"
     = link_to "ラベル作成", new_label_path, class: "btn btn-outline-dark label_button"
-    = f.collection_check_boxes(:label_ids, Label.all, :id, :name) do |label|
+    = f.collection_check_boxes(:label_ids, Label.where(id:1..5).or(Label.where(id: current_user.labels.ids)), :id, :name) do |label|
       .form-check.ml-3
         = label.label class: "form-check-label" do
           = label.check_box class: "form-check-input"
