@@ -19,5 +19,10 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:laberl) { create(:label) }
+  it "名前を空白にするとinvalid" do
+    label = build(name: nil)
+    label.valid?
+    
+  end
 end
