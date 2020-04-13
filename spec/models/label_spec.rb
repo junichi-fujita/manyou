@@ -19,10 +19,18 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :model do
-  let(:laberl) { create(:label) }
-  it "名前を空白にするとinvalid" do
-    label = build(name: nil)
-    label.valid?
-    
+  it "ラベル名を空白にするとinvalid" do
+    label1 = build(:label, name: nil)
+    label1.valid?
+    expect(label1.errors.messages[:name]).to include("を入力してください")
+  end
+  it "ラベル名が２０文字を超えるとinvalid" do
+    label2 = build(:label, name: "a" * 21)
+    label2.valid?
+    expect(label2.errors.messages[:name]).to include("は20文字以内で入力してください")
+  end
+  it "ラベル名が１文字以上２０文字以下ならvalid" do
+    label3 = build(:label, name: "a" * 20)
+    expect(label3.valid?).to be_truthy
   end
 end
