@@ -39,6 +39,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @label = Label.new
   end
 
   def show; end

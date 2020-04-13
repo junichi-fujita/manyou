@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'labels/new'
+  resources :labels, only: %i[new create destroy]
   namespace :admin do
     root "users#index"
     resources :users, except: [:index, :show]
