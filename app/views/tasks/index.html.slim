@@ -41,8 +41,8 @@ table.table.table-hover
         td = Task.human_attribute_name("status_#{task.status}") 
         td = task.end_date.try(:strftime, "%Y年%m月%d日")
         td 
-          = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"
+          = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3" if current_user.own?(task) || logged_in_as_admin?
           = link_to t(".destroy"), task, method: :delete, 
-            data: { confirm: t(".confirm", task_name: task.name) }, class: "btn btn-danger"
+            data: { confirm: t(".confirm", task_name: task.name) }, class: "btn btn-danger" if current_user.own?(task) || logged_in_as_admin?
 .mb-3
   = paginate @tasks
