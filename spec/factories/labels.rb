@@ -18,6 +18,10 @@
 #
 FactoryBot.define do
   factory :label do
-    name { "MyString" }
+    name { "python" }
+  end
+
+  factory :another_label, class: Label do
+    name { "kotlin" }
   end
 end
