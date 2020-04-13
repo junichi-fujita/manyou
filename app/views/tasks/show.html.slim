@@ -38,4 +38,5 @@ table.table.table-hover
         - @task.labels.each do |label|
           span.badge.badge-primary = label.name
           |  
-= link_to t(".update"), edit_task_path, class: "btn btn-primary mr-3"
+= link_to t(".update"), edit_task_path,
+  class: "btn btn-primary mr-3" if current_user.own?(@task) || logged_in_as_admin?
