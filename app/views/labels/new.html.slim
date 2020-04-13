@@ -1,10 +1,10 @@
-h1 ラベルの作成
+h1 = t("labeling")
 
 = render "shared/errors", obj: @label
 
 .mt-4
   = form_with model: @label, local: true do |f|
     .form-group
-      = f.label "ラベル名", class: "mr-2"
+      = f.label t("label_name"), class: "mr-2"
       = f.text_field :name
     = f.submit nil, class: "btn btn-primary"

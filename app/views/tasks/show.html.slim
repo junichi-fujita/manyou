@@ -33,7 +33,7 @@ table.table.table-hover
       th = Task.human_attribute_name("updated_at")
       td = @task.updated_at.try(:strftime, "%Y年%m月%d日 %H時%M分")
     tr
-      th = "ラベル"
+      th = t("label")
       td 
         - @task.labels.each do |label|
           span.badge.badge-primary = label.name
