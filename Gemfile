@@ -37,6 +37,7 @@ group :development, :test do
   gem 'faker'
   gem 'launchy'
   gem 'rails-flog', require: 'flog'
+  gem 'annotate'
 end
 
 group :development do

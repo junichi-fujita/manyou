@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id          :bigint           not null, primary key
+#  description :text             not null
+#  end_date    :datetime
+#  name        :string           not null
+#  priority    :integer
+#  status      :string           default("yet"), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint
+#
+# Indexes
+#
+#  index_tasks_on_status   (status)
+#  index_tasks_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class Task < ApplicationRecord
   has_many :labelings, dependent: :destroy
   has_many :labels, through: :labelings
