@@ -20,7 +20,11 @@
 #
 FactoryBot.define do
   factory :labeling do
-    task { nil }
-    label { nil }
+    task_id { Task.first.id }
+    label_id { Label.first.id }
+  end
+  factory :another_labeling, class: Labeling do
+    task_id { Task.second.id }
+    label_id { Label.second.id}
   end
 end
