@@ -6,5 +6,5 @@ h1 = t("labeling")
   = form_with model: @label, local: true do |f|
     .form-group
       = f.label t("label_name"), class: "mr-2"
-      = f.text_field :name
+      = f.text_field :name, id: "label_name"
     = f.submit nil, class: "btn btn-primary"
