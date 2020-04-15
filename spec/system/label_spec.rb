@@ -27,7 +27,7 @@ RSpec.describe "ラベル管理機能", type: :system do
     it "タスク新規登録画面で、ラベルを削除するとラベルが消える" do
       visit new_task_path
       label1 = create(:label, name: "test1", user_id: user.id)
-      click_on "削除する"
+      click_on "削除"
       expect(page).to have_content("ラベルを削除しました。")
     end
   end
