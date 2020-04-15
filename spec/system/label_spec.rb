@@ -3,9 +3,14 @@ require 'selenium-webdriver'
 
 RSpec.describe "ラベル管理機能", type: :system do
   let!(:user) { create(:user) }
+  let!(:user2) { create(:user2) }
+  let!(:task) { create(:task, user: user) }
+  let!(:second_task) { create(:second_task, user: user2) }
   let!(:label) { create(:label, user: user) }
-  let(:another_label) { create(:another_label, user: user) }
-  let!(:labels) { create_list(:label, 6) }
+  let!(:another_label) { create(:another_label, user: user2) }
+  let!(:labeling) { create(:labeling) }
+  let!(:another_labeling) { create(:another_labeling) }
+  
 
   def login
     visit new_user_path
@@ -29,6 +34,16 @@ RSpec.describe "ラベル管理機能", type: :system do
       label1 = create(:label, name: "test1", user_id: user.id)
       click_on "削除"
       expect(page).to have_content("ラベルを削除しました。")
+    end
+    it "タスク一覧画面でラベルの絞り込みをpythonを選択するとname1が表示される" do
+      visit root_path
+      select "python", from: "label_id", match: :first
+      expect(page).to have_content("name1")
+    end
+    it "タスク一覧画面でラベルの絞り込みをkotlinを選択するとname1は表示されない" do
+      visit root_path
+      select "kotlin", from: "label_id", match: :first
+      expect(page).to_not have_content("name1")
     end
   end
 end
