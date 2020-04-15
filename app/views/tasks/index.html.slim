@@ -15,6 +15,7 @@ h1 = t ".title"
       = select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]),
                     { prompt: 'ラベルで絞り込み',
                       class: 'form-control',
+                      id: "search_label",
                       onchange: 'submit(this.form);' }
 
 .mb-3
