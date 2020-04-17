@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :login_required, only: :show
+  before_action :set_user, only: :show
   
   def new
     if current_user
@@ -10,10 +11,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    if current_user.administrator?
-      render :show
-    elsif @user == current_user
+    if logged_in_as_admin? || @user == current_user
       render :show
     else
       redirect_to root_path
@@ -46,5 +44,9 @@ class UsersController < ApplicationController
     if User.find(params: id) != current_user.id
       redirect_to root_path
     end
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

@@ -18,4 +18,13 @@
     = f.datetime_select :end_date,
         start_year: Time.current.year, end_year: Time.current.year + 10,
         use_month_numbers: true
+  .form-group
+    = f.label t("label")
+    = link_to t("labeling"), new_label_path, class: "btn btn-outline-dark label_button"
+    = f.collection_check_boxes(:label_ids, Label.where(id:1..5).or(Label.where(id: current_user.labels.ids)), :id, :name) do |label|
+      .form-check.ml-3
+        = label.label class: "form-check-label" do
+          = label.check_box class: "form-check-input"
+          = label.text
+          = link_to t("delete"), label_path(label.object.id), class: "btn btn-outline-danger btn-sm ml-2", method: :delete if label.object.id > 5
   = f.submit nil, class: "btn btn-primary"

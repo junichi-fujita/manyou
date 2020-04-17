@@ -14,5 +14,5 @@
   .form-check
     = f.label :administrator, class: "form-check-label" do
       = f.check_box :administrator, class: "form-check-input"
-      | 管理者権限
+      = t("admin")
   = f.submit nil, class: "btn btn-primary mt-2"

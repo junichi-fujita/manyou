@@ -1,15 +1,22 @@
 h1 = t ".title"
 
-.row.mt-3
-  .col
+.row.mt-3.justify-content-between.align-items-center
+  .col-md-4
     = link_to t(".new") , new_task_path, class: "btn btn-primary"
 
-  .col
+  .col-md-5
     = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
       = f.select :q_status, Task.status_options
       = f.text_field :q_name
       = f.submit t(".search")
 
+  .col-md-3
+    = form_with url: label_search_tasks_path, method: :get do
+      = select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]),
+                    { prompt: 'ラベルで絞り込み',
+                      class: 'form-control',
+                      id: "search_label",
+                      onchange: 'submit(this.form);' }
 
 .mb-3
 table.table.table-hover
@@ -22,10 +29,6 @@ table.table.table-hover
         = link_to "▼", root_path(priority_num: "desc"), class: "ml-2", id: "pri_desc"
       th 
         = Task.human_attribute_name("status")
-        / #form
-        /   = form_with scope: :search, url: search_tasks_path, method: :get, local: true do |f|
-        /       = f.select :q_status, Task.status_options
-        /       = f.submit "送信"
       th.end_date 
         = Task.human_attribute_name("end_date")
         = link_to "▲", root_path(sort_end_date: "asc"), class: "ml-2", id: "end_asc"
@@ -39,8 +42,10 @@ table.table.table-hover
         td = Task.human_attribute_name("status_#{task.status}") 
         td = task.end_date.try(:strftime, "%Y年%m月%d日")
         td 
-          = link_to t(".update"), edit_task_path(task), class: "btn btn-primary mr-3"
+          = link_to t(".update"), edit_task_path(task),
+            class: "btn btn-primary mr-3" if current_user.own?(task) || logged_in_as_admin?
           = link_to t(".destroy"), task, method: :delete, 
-            data: { confirm: t(".confirm", task_name: task.name) }, class: "btn btn-danger"
+            data: { confirm: t(".confirm", task_name: task.name) },
+            class: "btn btn-danger" if current_user.own?(task) || logged_in_as_admin?
 .mb-3
   = paginate @tasks

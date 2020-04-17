@@ -48,7 +48,7 @@ RSpec.describe "タスク管理機能", type: :system do
         sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name1"
-        expect(sort_list[1]).to have_content "name2"
+        expect(sort_list[2]).to have_content "name2"
       end
     end
     context "終了期限の降順ボタンを押した場合" do
@@ -57,7 +57,7 @@ RSpec.describe "タスク管理機能", type: :system do
         sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name2"
-        expect(sort_list[1]).to have_content "name1"
+        expect(sort_list[2]).to have_content "name1"
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe "タスク管理機能", type: :system do
         sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name1"
-        expect(sort_list[1]).to have_content "name2"
+        expect(sort_list[2]).to have_content "name2"
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe "タスク管理機能", type: :system do
         sleep 0.5
         sort_list = all(".sort")
         expect(sort_list[0]).to have_content "name2"
-        expect(sort_list[1]).to have_content "name1"
+        expect(sort_list[2]).to have_content "name1"
       end
     end
   end
@@ -107,10 +107,10 @@ RSpec.describe "タスク管理機能", type: :system do
 
   describe "一般ユーザーまたは管理者での閲覧権限" do
     context "一般ユーザーでログインし、他人のタスクにアクセスした場合" do
-      it "root画面に遷移する" do
+      it "他人のタスクに遷移する" do
         login
         visit task_path(task_admin.id)
-        expect(page).to have_content("タスク一覧")
+        expect(page).to have_content("タスクの詳細")
       end
     end
     context "管理者でログインし、他人のタスクにアクセスした場合" do

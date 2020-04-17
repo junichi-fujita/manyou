@@ -1,56 +1,51 @@
 class TasksController < ApplicationController
   before_action :login_required
-  before_action :set_task, only:[:update, :destroy]
+  before_action :set_task, only:[:show, :edit, :update, :destroy]
 
   def index
     if params[:sort_end_date] == "asc"
-      @tasks = current_user.tasks.order(end_date: :asc).page(params[:page]).per(5)
+      @tasks = Task.order(end_date: :asc).page(params[:page]).per(5)
     elsif params[:sort_end_date] == "desc"
-      @tasks = current_user.tasks.order(end_date: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(end_date: :desc).page(params[:page]).per(5)
     elsif params[:priority_num] == "asc"
-      @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(5)
+      @tasks = Task.order(priority: :asc).page(params[:page]).per(5)
     elsif params[:priority_num] == "desc"
-      @tasks = current_user.tasks.order(priority: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(priority: :desc).page(params[:page]).per(5)
     else
-      @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
+      @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
   end
 
   def search
     if params[:search][:q_name] != "" && params[:search][:q_status] =! ""
-      @tasks = current_user.tasks.search_double(params[:search][:q_name], 
+      @tasks = Task.search_double(params[:search][:q_name], 
         params[:search][:q_status]).page(params[:page]).per(5)
 
     elsif params[:search][:q_name] != ""
-      @tasks = current_user.tasks.search_name(params[:search][:q_name]).page(params[:page]).per(5)
+      @tasks = Task.search_name(params[:search][:q_name]).page(params[:page]).per(5)
     elsif params[:search][:q_status] != ""
-      @tasks = current_user.tasks.search_status(params[:search][:q_status]).page(params[:page]).per(5)
+      @tasks = Task.search_status(params[:search][:q_status]).page(params[:page]).per(5)
     else
       @tasks = Task.order(created_at: :desc).page(params[:page]).per(5)
     end
     render :index
   end
 
+  def label_search
+    @tasks = params[:label_id].present? ? Label.find(params[:label_id]).tasks : Task.all
+    @tasks = @tasks.page(params[:page]).per(5)
+    render :index
+  end
+
   def new
     @task = Task.new
+    @label = Label.new
   end
 
-  def show
-    @task = Task.find(params[:id])
-    if logged_in_as_admin?
-      render :show
-    elsif current_user.own?(@task)
-      render :show
-    else
-      redirect_to root_path
-    end
-  end
+  def show; end
 
   def edit
-    @task = Task.find(params[:id])
-    if current_user.administrator?
-      render :edit
-    elsif @task.user_id == current_user.id
+    if logged_in_as_admin? || current_user.own?(@task)
       render :edit
     else
       redirect_to root_path
@@ -95,6 +90,7 @@ class TasksController < ApplicationController
       :end_date,
       :status,
       :priority,
+      label_ids: [],
     )
   end
 end
